@@ -1,0 +1,114 @@
+.header {
+  background-color: var(--bg-color);
+  color: white;
+  padding: 2em;
+}
+.header-container {
+  display: flex;
+  width: 100%;
+  max-width: 87rem;
+  margin: 0 auto;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-button .btn {
+  margin-right: 10px;
+}
+
+.header-left,
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.header-center {
+  position: relative;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.header-center input {
+  width: 100%;
+  max-width: 400px;
+  padding: 1em;
+  border: none;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  outline: none;
+  /* background-color: var(--fade-bg); */
+  background: var(--light-background);
+  box-shadow: var(--light-box-shadow);
+  backdrop-filter: var(--light-backdrop-filter);
+
+  color: var(--text-color);
+  font-size: 1.2rem;
+}
+.header-center input::placeholder {
+  font-size: 1.2rem;
+  align-items: center;
+  padding: 0 0 0 12px;
+}
+
+.header-center .search-button {
+  padding: 1em;
+  border: none;
+  outline: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--text-color);
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+  /* background-color: var(--fade-bg) */
+  background: var(--light-background);
+  box-shadow: var(--light-box-shadow);
+  backdrop-filter: var(--light-backdrop-filter);
+}
+
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .header-left h2 {
+    font-size: 1.4rem;
+  }
+
+  .header-center {
+    width: 100%;
+    margin-top: 1em;
+    position: relative;
+  }
+
+  .header-center input {
+    max-width: none;
+  }
+
+  .header-right {
+    margin-top: 1em;
+    position: absolute;
+    top: 0;
+    right: 20px;
+  }
+  .mode-switch {
+    margin-top: 10px;
+  }
+}
+@media (max-width: 768px) {
+  .header-right {
+    margin-top: 1em;
+    position: absolute;
+    top: 0;
+    right: -15px;
+  }
+}
+@media (max-width: 352px) {
+  .header-right {
+    margin-top: 1em;
+    position: absolute;
+    top: 0;
+    right: -60px;
+  }
+}

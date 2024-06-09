@@ -1,35 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useContext } from "react";
+import "./App.css";
+import LoadingBar from "./Components/CurrentDay/LoadingBar";
+import Header from "./Layout/Header/Header";
+import Hero from "./Layout/Hero/Hero";
+import Sidebar from "./Layout/Sidebar/Sidebar";
+import WeatherContext from "./context/weatherContext";
+import { useTheme } from "./context/ThemeContext";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { theme, toggleTheme } = useTheme();
+  const { weatherData, loading } = useContext(WeatherContext);
+  if (loading) {
+    return <LoadingBar></LoadingBar>;
+  }
+  if (!weatherData) {
+    return <div className="errorpage">No weather data available</div>;
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Header />
+      <main className="main-content">
+        <Hero />
+        <Sidebar />
+      </main>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
