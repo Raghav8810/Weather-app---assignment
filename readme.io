@@ -1,6 +1,3 @@
-# React + Vite
-
-
 # Weather Application
 
 ## Overview
@@ -72,3 +69,4 @@ Contributions are welcome! Please fork the repository and create a pull request 
 ---
 
 For any issues or feature requests, please open an issue on GitHub. Enjoy using the Weather Application!
+
