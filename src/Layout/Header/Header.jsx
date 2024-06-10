@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
 import "./header.css";
-import { Moon, Search, Sun } from "lucide-react";
+import { LocateFixed, Moon, Search, Sun, Target } from "lucide-react";
 import WeatherContext from "../../context/weatherContext";
 import { useTheme } from "../../context/ThemeContext";
 
 const Header = () => {
   const { theme, toggleTheme } = useTheme();
-  const { weatherData, loading, setQuery, setLoading } =
+  const { weatherData, loading, setQuery, setLoading, fetchCurrentLocationWeather } =
     useContext(WeatherContext);
   const [isLoading, setIsLoading] = useState(false);
   const [city, setCity] = useState("");
@@ -17,6 +17,7 @@ const Header = () => {
       setIsLoading(true);
       setQuery({ q: city });
     }
+
   };
   if (!weatherData) {
     return <div>No weather data available</div>;
@@ -39,6 +40,12 @@ const Header = () => {
             <button className="search-button" onClick={handleSearch}>
               <Search className="btn" />
             </button>
+            <button className="target_btn" onClick={fetchCurrentLocationWeather} >
+              <LocateFixed className="target_b" size={50} />
+          </button>
+          
+            
+
           </div>
           <div className="header-right">
             <div className="mode-switch">
