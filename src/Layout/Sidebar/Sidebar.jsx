@@ -43,6 +43,7 @@ const Sidebar = () => {
 
             {
               fiveCountries.map((data,i) => {
+                const icon = weatherData.daily[i]?.icon;
                 return(
                   <>
                   <a href='#' onClick={() =>setQuery({q : data.name}) } key={i}>
@@ -53,7 +54,7 @@ const Sidebar = () => {
                          <p>Cloudy</p>
                          </div>
                        <div className='city_details'>  
-                         <img src='./images/sunny.svg' />
+                         <img src={icon} />
               
                        </div>
                   </div>

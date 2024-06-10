@@ -22,7 +22,7 @@ const WeekDay = () => {
           </div>
           <hr></hr>
           <div className="week_temp">
-            <img src="./images/sunny.svg" />
+            <img src={d.icon} />
             <h1>{d.temp.toFixed()}°C</h1>
           </div>
         </div>

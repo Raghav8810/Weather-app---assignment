@@ -8,10 +8,7 @@ const getWeatherData = (infoType, searchParams) => {
   url.search = new URLSearchParams({ ...searchParams, appid: API_KEY });
 
   return fetch(url).then((res) => res.json());
-
 };
-const customIconUrl = (icon) => weatherimg[icon];
-
 
 const formateToLocalTime = (
   seconds,
@@ -38,7 +35,7 @@ const currentDataFormate = (data) => {
   } = data;
   const { main: details, icon } = weather[0];
   const FormattedLocalTime = formateToLocalTime(dt, timeZone);
-  //   const customIconUrl = weatherimg[icon];
+  const customIconUrl = weatherimg[icon];
 
   return {
     temp,
@@ -53,7 +50,7 @@ const currentDataFormate = (data) => {
     speed,
     details,
     // icon : iconUrl(icon),
-    icon: customIconUrl(icon),
+    icon: customIconUrl,
     formattedLocalTime: formateToLocalTime(dt, timeZone),
     dt,
     timeZone,
@@ -74,7 +71,7 @@ const getformateForcasteWeather = (seconds, offset, data) => {
       temp: f.main.temp,
       title: formateToLocalTime(f.dt, offset, "hh:mm a"),
       // icon: iconUrl(f.weather[0].icon)
-      icon: customIconUrl(f.weather[0].icon),
+      icon: weatherimg[f.weather[0].icon],
       date: f.dt_txt,
     }));
   //daily
@@ -84,7 +81,7 @@ const getformateForcasteWeather = (seconds, offset, data) => {
       temp: f.main.temp,
       title: formateToLocalTime(f.dt, offset, "ccc"),
       // icon: iconUrl(f.weather[0].icon)
-      icon: customIconUrl(f.weather[0].icon),
+      icon: weatherimg[f.weather[0].icon],
       date: f.dt_txt,
     }));
 
@@ -92,19 +89,34 @@ const getformateForcasteWeather = (seconds, offset, data) => {
 };
 
 const getFormatData = async (searchParams) => {
-  const formatCurrentData = await getWeatherData("weather", searchParams).then(
-    currentDataFormate
-  );
+  try {
+    const formatCurrentData = await getWeatherData(
+      "weather",
+      searchParams
+    ).then(currentDataFormate);
 
-  const { dt, lat, lon, timeZone } = formatCurrentData;
+    if (!formatCurrentData) {
+      throw new Error("Failed to fetch or format current weather data");
+    }
 
-  const formateForcasteWeather = await getWeatherData("forecast", {
-    lat,
-    lon,
-    units: searchParams.units,
-  }).then((d) => getformateForcasteWeather(dt, timeZone, d.list));
+    const { dt, lat, lon, timeZone } = formatCurrentData;
 
-  return { ...formatCurrentData, ...formateForcasteWeather };
+    const formateForcasteWeather = await getWeatherData("forecast", {
+      lat,
+      lon,
+      units: searchParams.units,
+    }).then((d) => {
+      if (!d || !d.list) {
+        throw new Error("Failed to fetch forecast weather data");
+      }
+      return getformateForcasteWeather(dt, timeZone, d.list);
+    });
+
+    return { ...formatCurrentData, ...formateForcasteWeather };
+  } catch (error) {
+    console.error("Error in getFormatData:", error.message);
+    return null;
+  }
 };
 
 export default getFormatData;
