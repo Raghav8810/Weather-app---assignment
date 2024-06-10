@@ -16,6 +16,7 @@ This Weather Application provides real-time weather information and forecasts fo
 ### Current Location Weather
 - **Temperature**: Displays the current temperature.
 - **Date and Time**: Shows the current date and local time.
+- - **Current location**: Shows the current lcoation with weather.
 
 ### 7 Days Weather Forecast
 - Provides a detailed weather forecast for the next 7 days.
